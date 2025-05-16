@@ -6,3 +6,17 @@ python-dotenv
 certifi
 pymongo[srv]
 pinecone[grpc]
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-tavily
+langchain-text-splitters
+langdetect
+langfuse
+langgraph
+langgraph-checkpoint
+langgraph-prebuilt
+langgraph-sdk
+langsmith
+python-dotenv
