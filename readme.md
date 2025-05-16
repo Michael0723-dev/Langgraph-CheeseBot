@@ -1,0 +1,1 @@
+This is ChatBot project about cheese, based on RAG using scraping data.
