@@ -124,7 +124,7 @@ class GraphAgent():
         print(state)
         print("===========================")
         prompts = [{"role": "developer", "content": isCheeseChat}] + [
-            {"role": "user", "content": state.get("user_query", "")}]
+            {"role": "user", "content": "this is user query" + state.get("user_query", "") + " and this is chat history: " + str(state.get("chat_history")) }]
         response = self.client.chat.completions.create(
             model="gpt-4.1",
             messages=prompts,
@@ -152,7 +152,7 @@ class GraphAgent():
         # print(json.loads(response.choices[0].message.content))
 
         if json.loads(response.choices[0].message.content)["flag"] == True:
-            return {"is_query_question_analyze_check": True, "observation": f"user_confirmed: true, confirmed_query: {state.get('user_query')}, user_feedback: yes, you are right."}
+            return {"is_query_question_analyze_check": True, "user_query": json.loads(response.choices[0].message.content)["analyzed_query"], "observation": f"user_confirmed: true, confirmed_query: {state.get('user_query')}, user_feedback: yes, you are right."}
 
         else:
             print("===============")
