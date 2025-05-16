@@ -30,7 +30,7 @@ class State(TypedDict):
     is_query_question_analyze_check: bool
     generated_sql: Optional[str]
     final_answer: Optional[str]
-    db_search_results_summary: Optional[Union[List[dict], str]]
+    db_search_results_summary: Optional[Union[List[Dict], str]]
 
 class isPossible(BaseModel):
     flag: bool
@@ -134,7 +134,7 @@ class GraphAgent():
         if response.choices[0].message.content.strip().lower() == "yes":
             return {"is_cheese_query": True, "observation": "this question is about cheese."}
         else:
-            return {"is_cheese_query": False, "observation": "this question is not about cheese.", "chat_history": state.get("chat_history").append(f"user: {state.get("user_query", "")}")}
+            return {"is_cheese_query": False, "observation": "this question is not about cheese.", "chat_history": state.get("chat_history") + [f"user: {state.get("user_query", "")}"]}
 
     def question_analyze_check(self, state: State) -> str:
 
@@ -262,7 +262,7 @@ class GraphAgent():
             temperature=0.1
         )
 
-        return {"final_answer": stream.choices[0].message.content, "chat_history:": state.get("chat_history").append(f"assistant: {stream.choices[0].message.content}")}
+        return {"final_answer": stream.choices[0].message.content, "chat_history:": state.get("chat_history") + [f"assistant: {stream.choices[0].message.content}"]}
 
     # def format_conversation_history(self, messages: List[Dict[str, str]]) -> str:
     #     # return "\n".join([f"{msg.content['role']}: {msg.content['content']}" for msg in messages])

@@ -221,7 +221,7 @@ if __name__ == "__main__":
             with st.spinner("The cheese expert is thinking..."):
                 if st.session_state.interrupt == False:
                     for event in st.session_state.agent.graph.stream(
-                            {"user_query": query, "chat_history": [{"role": "user", "content": query}],
+                            {"user_query": query, "chat_history": [f"user: {query}"],
                              "is_cheese_query": None, "is_query_question_analyze_check": False, "observation": "", "generated_sql": "", "db_search_results_summary": {}, "thoughts": ["Starting..."]}, config=config):
                         print("event:", event, event.values())
                         if '__interrupt__' in event:
