@@ -230,7 +230,7 @@ if __name__ == "__main__":
 
                             response = "I understood your question as follows:" + "\n" + event['__interrupt__'][0].value["message"] + "\n" + "Am I right?"
                         elif 'generate_answer' in event:
-                            print(event['generate_answer'])
+                            # print(event['generate_answer'])
                             response = event['generate_answer']["final_answer"]
                         elif 'reasoner' in event:
                             st.session_state.thinking = event['reasoner']["thoughts"]
@@ -245,7 +245,7 @@ if __name__ == "__main__":
                     for event in st.session_state.agent.graph.stream(Command(resume=query), config=config):
                         print("2event:", event)
                         if 'generate_answer' in event:
-                            print(event['generate_answer'])
+                            # print(event['generate_answer'])
                             response = event['generate_answer']["final_answer"]
                         # for value in event.values():
                         #     print("Assistant:", value)

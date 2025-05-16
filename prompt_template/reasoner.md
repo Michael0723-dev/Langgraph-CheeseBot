@@ -23,7 +23,6 @@ input query is same as following:
 
 **Your Task:**
 Based on the user's query, chat history, previous observation, and current knowledge, decide the next best action.
-if user query consists of multiple question, please split user query and operate each question individually.
 Output your decision as a JSON object with three keys: "thought", "action_name", and "action_input".
 
 1.  **`thought`**: A brief explanation of your reasoning. Why are you choosing this action? What do you expect to achieve?
@@ -98,7 +97,7 @@ Your JSON Output:
 }
 ```
 
-## Example2
+<!-- ## Example2
 User Query: "What is the most expensive cheese and how many cheeses that is same brand of that cheese in there?"
 Previous Observation: `{"is_query_confirmed_by_user": true, "confirmed_query": "what is the most expensive cheese? and how many cheese that is same brand of the most expensive cheese in there?", "user_feedback":"yes, I meaned that."}`
 Current knowledge: `is_cheese_query`: true, `is_query_confirmed_by_user`: true, ...
@@ -110,7 +109,7 @@ Your JSON Output:
   "action_name": "generate_sql",
   "action_input": {"query": "what is the most expensive cheese you have?"}
 }
-```
+``` -->
 ## Example3
 User Query: "What is the most expensive cheese?"
 Previous Observation: `{"results": {\n    "brand": "Alambra",\n    "count_unit": "Item",\n    "department": "Sliced Cheese",\n    "dimension_each": "L 1\\" x W 1\\" x H 1\\"",\n    "discount": "",\n    "empty": false,\n    "href": "https://shop.kimelo.com/sku/cheese-halloumi-tradition-greek-import-4088-oz-124144/124144",\n    "images": [\n        "https://d3tlizm80tjdt4.cloudfront.net/remote_images/image/1998/small/92cb453b056d15b02a89fefb67e39797fc58b0a4398a29b53f.jpg"\n    ],\n    "item_counts_each": 1.0,\n    "name": "Cheese, Halloumi, Tradition, Greek, Import, 40/8.8 Oz 124144",\n    "popularity_order": 51.0,\n    "price": 197.35,\n    "pricePer": 8.97,\n    "price_each": 197.35,\n    "price_order": 1.0,\n    "price_unit": "lb",\n    "relateds": [],\n    "showImage": "https://d3tlizm80tjdt4.cloudfront.net/remote_images/image/1998/small/92cb453b056d15b02a89fefb67e39797fc58b0a4398a29b53f.jpg",\n    "sku": "124144",\n    "text": "Cheese, Halloumi, Tradition, Greek, Import, 40/8.8 Oz (SKU: 124144) is a traditional Greek Halloumi cheese produced by the brand Alambra, categorized under Sliced Cheese. Each unit consists of 1 item with dimensions of L 1\\" x W 1\\" x H 1\\" and a total weight of 20 lbs. The price for each unit is $197.35, which breaks down to $8.97 per pound. There are no active discounts for this product, and it is currently in stock. No related cheeses are listed for this particular SKU. This Halloumi has a price order rank of 1 and a popularity rank of 51. For more details and images, visit the product page: https://shop.kimelo.com/sku/cheese-halloumi-tradition-greek-import-4088-oz-124144/124144.",\n    "weight_each": 20.0,\n    "weight_unit": "lbs"\n}, "count of results: 1}`
@@ -126,7 +125,7 @@ Your JSON Output:
 ```
 
 ## Example4
-User Query: "What is the most expensive cheese and how many cheeses that is same brand of that cheese in there?"
+<!-- User Query: "What is the most expensive cheese and how many cheeses that is same brand of that cheese in there?"
 Previous Observation: `{"results": {\n    "brand": "Alambra",\n    "count_unit": "Item",\n    "department": "Sliced Cheese",\n    "dimension_each": "L 1\\" x W 1\\" x H 1\\"",\n    "discount": "",\n    "empty": false,\n    "href": "https://shop.kimelo.com/sku/cheese-halloumi-tradition-greek-import-4088-oz-124144/124144",\n    "images": [\n        "https://d3tlizm80tjdt4.cloudfront.net/remote_images/image/1998/small/92cb453b056d15b02a89fefb67e39797fc58b0a4398a29b53f.jpg"\n    ],\n    "item_counts_each": 1.0,\n    "name": "Cheese, Halloumi, Tradition, Greek, Import, 40/8.8 Oz 124144",\n    "popularity_order": 51.0,\n    "price": 197.35,\n    "pricePer": 8.97,\n    "price_each": 197.35,\n    "price_order": 1.0,\n    "price_unit": "lb",\n    "relateds": [],\n    "showImage": "https://d3tlizm80tjdt4.cloudfront.net/remote_images/image/1998/small/92cb453b056d15b02a89fefb67e39797fc58b0a4398a29b53f.jpg",\n    "sku": "124144",\n    "text": "Cheese, Halloumi, Tradition, Greek, Import, 40/8.8 Oz (SKU: 124144) is a traditional Greek Halloumi cheese produced by the brand Alambra, categorized under Sliced Cheese. Each unit consists of 1 item with dimensions of L 1\\" x W 1\\" x H 1\\" and a total weight of 20 lbs. The price for each unit is $197.35, which breaks down to $8.97 per pound. There are no active discounts for this product, and it is currently in stock. No related cheeses are listed for this particular SKU. This Halloumi has a price order rank of 1 and a popularity rank of 51. For more details and images, visit the product page: https://shop.kimelo.com/sku/cheese-halloumi-tradition-greek-import-4088-oz-124144/124144.",\n    "weight_each": 20.0,\n    "weight_unit": "lbs"\n}, "count of results: 1}`
 Current knowledge: `is_cheese_query`: true, `is_query_confirmed_by_user`: true, ...
 
@@ -136,8 +135,8 @@ Your JSON Output:
   "thought": "Now I find answer for 'what is the most expensive cheese?'. then user next question is count of cheese that has a same brand with this cheese. for data retrieving, I will use generate_sql ",
   "action_name": "generate_sql",
   "action_input": {"query_to_sql": "the count of cheese that has a same brand with Cheese, Halloumi, Tradition, Greek, Import, 40/8.8 Oz 124144."}
-}
-```
+} -->
+<!-- ``` -->
 
 # Available Database Metadata Fields
 ### showImage

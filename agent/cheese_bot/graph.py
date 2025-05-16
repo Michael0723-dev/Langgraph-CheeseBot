@@ -97,7 +97,7 @@ class GraphAgent():
 
         print("====================")
         print("...reasoning process")
-        print(state)
+        # print(state)
         print("====================")
         reasoning_process = self.client.chat.completions.create(
             model="gpt-4.1",
@@ -111,7 +111,7 @@ class GraphAgent():
             ],
             response_format={"type": "json_object"}
         )
-        print(state.get("is_query_question_analyze_check"))
+        # print(state.get("is_query_question_analyze_check"))
         if json.loads(reasoning_process.choices[0].message.content)["action_name"] == "question_analyze_check" and state.get("is_query_question_analyze_check") == True:
             return {"thoughts": state.get("thoughts") + [str(json.loads(reasoning_process.choices[0].message.content)["thought"])], "action_name": "generate_answer","action_input": json.loads(reasoning_process.choices[0].message.content)["action_input"]}
         else:
@@ -121,7 +121,7 @@ class GraphAgent():
         """Every user question has to be checked that is a question concern with cheese, or not"""
         print("===========================")
         print("...checking cheese question")
-        print(state)
+        # print(state)
         print("===========================")
         prompts = [{"role": "developer", "content": isCheeseChat}] + [
             {"role": "user", "content": "this is user query" + state.get("user_query", "") + " and this is chat history: " + str(state.get("chat_history")) }]
@@ -134,13 +134,13 @@ class GraphAgent():
         if response.choices[0].message.content.strip().lower() == "yes":
             return {"is_cheese_query": True, "observation": "this question is about cheese."}
         else:
-            return {"is_cheese_query": False, "observation": "this question is not about cheese.", "chat_history": state.get("chat_history") + [f"user: {state.get("user_query", "")}"]}
+            return {"is_cheese_query": False, "observation": "this question is not about cheese.", "chat_history": state.get("chat_history")}
 
     def question_analyze_check(self, state: State) -> str:
 
         print("======================================")
         print("...checking question confirmed by user")
-        print(state)
+        # print(state)
         print("=======================================")
         prompts = [{"role": "developer", "content": isPossibleQuery}] + [{"role": "user", "content": "this is user query: " + state.get("user_query") + "and this is chat history: " + str(state.get("chat_history"))}]
         response = self.client.beta.chat.completions.parse(
@@ -152,7 +152,7 @@ class GraphAgent():
         # print(json.loads(response.choices[0].message.content))
 
         if json.loads(response.choices[0].message.content)["flag"] == True:
-            return {"is_query_question_analyze_check": True, "user_query": json.loads(response.choices[0].message.content)["analyzed_query"], "observation": f"user_confirmed: true, confirmed_query: {state.get('user_query')}, user_feedback: yes, you are right."}
+            return {"is_query_question_analyze_check": True, "observation": f"user_confirmed: true, confirmed_query: {state.get('user_query')}, user_feedback: yes, you are right."}
 
         else:
             print("===============")
@@ -174,7 +174,7 @@ class GraphAgent():
                 temperature=0.1
             )
 
-            print("response2:", response2)
+            # print("response2:", response2)
             if json.loads(response2.choices[0].message.content)["flag"] == True:
                 print("...this is user confirmed question")
                 return {"is_query_question_analyze_check": True, "observation": f"user_confirmed: true, confirmed_query: {state.get('user_query')}, user_feedback: yes"}
@@ -188,7 +188,7 @@ class GraphAgent():
         print("=======================")
         print("...generating sql query")
         print("=======================")
-
+        print(state.get("user_query"))
         prompts = [{"role": "developer", "content": query2mongo}] + [
             {"role": "user", "content": state.get("user_query")}]
         response = self.client.chat.completions.create(
@@ -199,6 +199,7 @@ class GraphAgent():
         )
 
         filter_data = json.loads(response.choices[0].message.content)
+
         if filter_data == {}:
             return {"generated_sql": filter_data, "observation": f"sql query: NO_QUERY_POSSIBLE, error: null"}
         else:
@@ -248,11 +249,11 @@ class GraphAgent():
 
         print("====================")
         print("...answer generating")
-        print(state)
+        # print(state)
         print("====================")
 
         if state.get("is_cheese_query") == True:
-            prompts = [{"role": "developer", "content": system + str(state.get("db_search_results_summary"))}, {"role": "user", "content": state.get("user_query")}]
+            prompts = [{"role": "developer", "content": system + state.get("db_search_results_summary")}, {"role": "user", "content": state.get("user_query")}]
         else:
             prompts = [{"role": "developer", "content": general}, {"role": "user", "content": state.get("user_query")}]
 
